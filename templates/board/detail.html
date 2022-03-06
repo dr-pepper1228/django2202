@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block con%}
+<h1>DETAIL PAGE</h1>
+    SUBJECT<input type="text" value="{{d.subject}}" disabled><br><br>
+    <img src="{{d.writer.getpic}}" width="30%"><br><br>
+    WRITER<input type="text" value="{{d.writer}}" disabled><br><br>
+    CONTENT<input type="text" value="{{d.content}}" disabled><br><br>
+<div>
+    <a href="{% url 'board:index' %}"><button>홈으로</button></a>
+    {% if user == d.writer %}
+    <a href="{% url 'board:update' d.id %}"><button>수정하기</button></a>
+    <a href="{% url 'board:delete' d.id %}"><button>삭제</button></a>
+    {% endif %}
+    {% if user in d.likey.all %}
+        <a href="{% url 'board:cancel' d.id %}"><button>♥</button></a>
+    {% else %}
+    <a href="{% url 'board:likey' d.id %}"><button>♡</button></a>
+    {% endif %}
+
+    <form method="post"action="{% url 'book:create' %}">
+        {% csrf_token %}
+        IMPORTANT? <input type="checkbox" name="impo">
+        <button>포스팅</button>
+        <input type="hidden" name="sn" value="{{d.subject}}">
+        <input type="hidden" name="su" value="{{request.path}}">
+    </form>
+    
+</div>
+
+<hr>
+<h2>댓글</h2>
+{% if rset %}
+    {% for i in rset %}
+        <img src="{{i.replyer.getpic}}" width="100px">
+        <b>{{i.replyer}}: </b>
+        {{i.comment}} 
+        {% if user == i.replyer %}
+            <a href="{% url 'board:dreply' d.id i.id %}"><button>X</button></a><br><br>
+        {% else %}
+        <br><br>
+        {% endif%}
+    {% endfor %}
+{% else %}
+    <h3>첫번째 댓글을 작성해주세요</h3>
+{% endif %}
+
+<br><br>
+<hr>
+<h2>댓글 작성</h2>
+<form method="post" action="{% url 'board:creply' d.id %}">
+    {% csrf_token %}
+    작성자<input type="text" value="{{user}}" disabled><br>
+    내용<textarea cols="30" rows="5" name="com"></textarea><br>
+    <button>등록하기</button>
+</form>
+
+
+
+
+{% endblock%}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block con%}
+    <h1>VOTE PAGE</h1>
+        <ul>
+            {% for i in tset %}
+                <li><a href="{% url 'vote:detail' i.id %}">{{i.subject}}</a></li>
+            {% endfor%}
+        </ul>
+
+{% endblock %}

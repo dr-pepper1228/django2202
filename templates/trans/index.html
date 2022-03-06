@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block con%}
+    <h1>번역기</h1>
+
+    <br><br>
+    <form method="post">
+        {% csrf_token %}
+        <textarea cols="70" rows="10" name="bf">{{bf}}</textarea>
+        <br><br>
+            <select name="fr">
+                <option value="eo" {% if fr == 'eo' %} selected {% endif %}>English</option>
+                <option value="ko" {% if fr == 'ko' %} selected {% endif %}>Korean</option>
+                <option value="it" {% if fr == 'it' %} selected {% endif %}>Italian</option>
+            </select>
+            에서
+            <select name="to">
+                <option value="la" {% if fr == 'la' %} selected {% endif %}>latin</option>
+                <option value="ga" {% if fr == 'ga' %} selected {% endif %}>irish</option>
+                <option value="jw" {% if fr == 'jw' %} selected {% endif %}>japanese</option>
+            </select>
+            로
+        <button>번역</button>
+        <br><br>
+        <textarea cols="70" rows="10" disabled>{{af}}</textarea>
+    </form>
+
+{% endblock %}
+
+
+

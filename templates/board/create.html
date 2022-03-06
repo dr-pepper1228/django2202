@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block con%}
+
+<h1>CREATE PAGE</h1>
+<form method="post">
+    {% csrf_token %}
+    SUBJECT<input type="text" name="sub"><br><br>
+    WRITER<input type="text" value="{{user}}" disabled><br><br>
+    CONTENT<textarea cols="50" rows="5" name="com"></textarea><br><br>
+    <button>생성하기</button>
+    <a href="{% url 'board:index' %}"><button type="button">돌아가기</button></a>
+</form>
+
+{% endblock %}

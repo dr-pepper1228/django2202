@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block con%}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h1>{{user}}'s PROFILE UPDATE</h1>
+        USERNAME<input type="text" value="{{user}}" disabled><br><br>
+        PASSWORD<input type="password" name="upass"><br><br>
+        EMAIL<input type="text" value="{{user.email}}" name="umail"><br><br>
+        COMMENT<textarea name="ucomm">{{user.comment}}</textarea><br><br>
+        <input type="file" name="upic"><br><br>
+        <button>정보수정</button>
+    </form>
+{% endblock %}

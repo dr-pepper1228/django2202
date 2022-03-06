@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block con%}
+<h1>게시판</h1>
+    <table border="1">
+        <tr>
+            <th>NO</th>
+            <th>SUBJECT</th>
+            <th>SUMMARY</th>
+            <th>WRITER</th>
+            <th>LIKEY</th>
+        </tr>
+    {% if bset %}
+        {% for i in bset %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td><a href="{% url 'board:detail' i.id %}">{{i.subject}}</a></td>
+                <td>{{i.summary}}</td>
+                <td>{{i.writer}}</td>
+                <td>{{i.likey.all.count}}</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr colspan="5">NO DATA</tr>
+    {% endif %}
+    </table>
+    <br>
+
+    {% if bset.has_previous%}
+        <a href="?page=1&cate={{cate}}&kw={{kw}}"><button >처음</button></a>
+        <a href="?page={{bset.previous_page_number}}&cate={{cate}}&kw={{kw}}"><button>이전</button></a>
+    {% else %}
+        <button disabled>처음</button>
+        <button disabled>이전</button>
+    {% endif %}
+
+    {% for i in bset.paginator.page_range %}
+    {% if i >= bset.number|add:-3 and bset.number|add:2 >= i %}
+           <a href="?page={{i}}&cate={{cate}}&kw={{kw}}"><button {% if bset.number == i %} disabled {% endif %}>{{i}}</button></a>
+       {% endif %}
+    {% endfor %}
+
+    {% if bset.has_next%}
+        <a href="?page={{bset.next_page_number}}&cate={{cate}}&kw={{kw}}"><button>다음</button></a>
+        <a href="?page={{bset.paginator.num_pages}}&cate={{cate}}&kw={{kw}}"><button >마지막</button></a>
+    {% else %}
+        <button disabled>다음</button>
+        <button disabled>마지막</button>
+    {% endif %}
+    <br><br>
+
+    <form>
+        <select name="cate">
+            <option value="sub" {% if cate == 'sub' %} selected {% endif %}>SUBJECT</option>
+            <option value="wri" {% if cate == 'wri' %} selected {% endif %}>WRITER</option>
+        </select>
+        <input type="text" name="kw" size="50" value="{{kw}}">
+        <button>검색</button>
+    </form>
+
+    <a href="{% url 'board:create' %}"><button>등록하기</button></a>
+{% endblock %}
+
+
+

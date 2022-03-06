@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block con%}
+    <h1>CREATE BOOKMARK</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        IMPORTANT? <input type="checkbox" name="impo"><br>
+        SITENAME<input type="text" name="sn"><br>
+        SITEURL<textarea cols="70" rows="5" name="su"></textarea><br>
+        <button>생성하기</button>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block con%}
+    <h1>{{user}}'s BOOKMARK</h1>
+    <a href="{% url 'book:create' %}"><button>추가하기</button></a>
+        <ul>
+            {% for i in bset %}
+                <li><a href="{{i.site_url}}" target="blank" {% if i.impo %}style="background-color: cyan;"{% endif %}>{{i.site_name}}</a></li>   
+                <a href="{% url 'book:delete' i.id %}"><button>X</button></a>
+            {% endfor %}
+        </ul>
+
+{% endblock %}
